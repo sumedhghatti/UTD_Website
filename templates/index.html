@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Image Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f8fb;
+            margin: 0;
+            color: #333;
+        }
+        header {
+            background-color: #1abc9c;
+            color: white;
+            padding: 1.5em 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #16a085;
+            padding: 1em 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #d1e8e2;
+        }
+        .container {
+            padding: 2em;
+            text-align: center;
+        }
+        footer {
+            background-color: #16a085;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 1em 0;
+        }
+        .tabs button {
+            background-color: #1abc9c;
+            border: none;
+            color: white;
+            padding: 1em;
+            cursor: pointer;
+            margin: 0 0.5em;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .tabs button.active {
+            background-color: #16a085;
+        }
+        .tab-content {
+            display: none;
+            text-align: center;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .scroll-view {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 1em;
+            margin-top: 2em;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Medical Image Detection</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="openTab(event, 'home')">Home</a>
+        <a href="#" onclick="openTab(event, 'models')">Models</a>
+        <a href="#" onclick="openTab(event, 'chatbot')">Chatbot</a>
+    </nav>
+    <div class="container">
+        <div id="home" class="tab-content active">
+            <h2>Welcome to Medical Image Detection</h2>
+            <p>Providing cutting-edge solutions for medical image analysis.</p>
+        </div>
+        <div id="models" class="tab-content">
+            <h2>Detection Models</h2>
+            <div class="tabs">
+                <button onclick="openModel(event, 'pneumonia')">Pneumonia</button>
+                <button onclick="openModel(event, 'brain_tumor')">Brain Tumor</button>
+                <button onclick="openModel(event, 'lung_cancer')">Lung Cancer</button>
+            </div>
+            <div id="pneumonia" class="tab-content">
+                <h3>Pneumonia Detection</h3>
+                <img src="path/to/pneumonia-image.jpg" alt="Pneumonia Image">
+                <div class="scroll-view">
+                    <p>Information about pneumonia detection...</p>
+                    <p>"Quote about pneumonia detection."</p>
+                </div>
+            </div>
+            <div id="brain_tumor" class="tab-content">
+                <h3>Brain Tumor Detection</h3>
+                <img src="path/to/brain-tumor-image.jpg" alt="Brain Tumor Image">
+                <div class="scroll-view">
+                    <p>Information about brain tumor detection...</p>
+                    <p>"Quote about brain tumor detection."</p>
+                </div>
+            </div>
+            <div id="lung_cancer" class="tab-content">
+                <h3>Lung Cancer Detection</h3>
+                <img src="path/to/lung-cancer-image.jpg" alt="Lung Cancer Image">
+                <div class="scroll-view">
+                    <p>Information about lung cancer detection...</p>
+                    <p>"Quote about lung cancer detection."</p>
+                </div>
+            </div>
+        </div>
+        <div id="chatbot" class="tab-content">
+            <h2>Chat with our Expert</h2>
+            <p>Ask any questions about medical image detection.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Medical Image Detection. All rights reserved.</p>
+    </footer>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.querySelectorAll("nav a");
+            tablinks.forEach(link => link.classList.remove("active"));
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+
+        function openModel(evt, modelName) {
+            var i, modelcontent;
+            modelcontent = document.querySelectorAll(".tab-content > div");
+            modelcontent.forEach(content => content.style.display = "none");
+            document.getElementById(modelName).style.display = "block";
+            var buttons = document.querySelectorAll(".tabs button");
+            buttons.forEach(button => button.classList.remove("active"));
+            evt.currentTarget.classList.add("active");
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            openTab(event, 'home');
+        });
+    </script>
+</body>
+</html>
