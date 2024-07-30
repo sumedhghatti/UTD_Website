@@ -7,22 +7,14 @@ import numpy as np
 import os
 import cv2
 
-def load_and_preprocess_image(img_path):
-    """Load and preprocess an image."""
-    img = cv2.imread(img_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, (150, 150))
-    img_array = img / 255.0  # Scale pixel values
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-    return img_array
-
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 # Load models
-pneumonia_model = load_model('models/pneumonia_classification_model1.keras')
+pneumonia_model = load_model('models/pneumonia_classification_model.keras')
 brain_tumor_model = load_model('models/brain_mri_model.keras')
-lung_cancer_model = load_model('models/lung_cancer_model.keras')
+lung_cancer_binary_model = load_model('models/lung_cancer_model.keras')
+lung_cancer_multiclass_model = load_model('models/lung_cancer_multiclass.keras')
 
 # Define target sizes for each model
 pneumonia_target_size = (150, 150)
@@ -36,6 +28,14 @@ def predict(model, img_path, target_size):
     img_array = img_array / 255.0
     prediction = model.predict(img_array)
     return prediction.tolist()
+
+def load_and_preprocess_image(img_path):
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, (150, 150))
+    img_array = img / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    return img_array
 
 @app.route('/')
 def index():
@@ -96,11 +96,17 @@ def lung_cancer():
             img = load_img(filepath, target_size=(224, 224))
             img_array = img_to_array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
-            binary_prediction = lung_cancer_model.predict(img_array)
+
+            # Stage 1: Binary classification
+            binary_prediction = lung_cancer_binary_model.predict(img_array)
             if binary_prediction > 0.5:
                 prediction = "Normal"
             else:
-                prediction = "Cancerous"
+                # Stage 2: Multiclass classification
+                multiclass_prediction = lung_cancer_multiclass_model.predict(img_array)
+                cancer_types = ['adenocarcinoma', 'large cell carcinoma', 'squamous cell carcinoma']
+                predicted_cancer_type = cancer_types[np.argmax(multiclass_prediction)]
+                prediction = predicted_cancer_type
             return render_template('lung_cancer.html', prediction=prediction, img_path=url_for('static', filename='uploads/' + filename))
     return render_template('lung_cancer.html')
 
