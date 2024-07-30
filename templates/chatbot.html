@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAId - Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f8fb;
+            margin: 0;
+            color: #333;
+        }
+        header {
+            background-color: #1abc9c;
+            color: white;
+            padding: 1.5em 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #16a085;
+            padding: 1em 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #d1e8e2;
+        }
+        .container {
+            padding: 2em;
+            text-align: center;
+        }
+        footer {
+            background-color: #16a085;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 1em;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 1em;
+            margin-bottom: 1em;
+        }
+        .chat-input {
+            display: flex;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+        }
+        .chat-input button {
+            background-color: #1abc9c;
+            border: none;
+            padding: 1em;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+            transition: background-color 0.3s;
+        }
+        .chat-input button:hover {
+            background-color: #16a085;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MedAId</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/pneumonia">Pneumonia</a>
+        <a href="/brain_tumor">Brain Tumor</a>
+        <a href="/lung_cancer">Lung Cancer</a>
+        <a href="/chatbot">Chatbot</a>
+    </nav>
+    <div class="container">
+        <h2>Chatbot</h2>
+        <div class="chat-container">
+            <div id="chat-box" class="chat-box"></div>
+            <div class="chat-input">
+                <input id="chat-input" type="text" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 MedAId. All rights reserved.</p>
+    </footer>
+    <script>
+        function sendMessage() {
+            const inputBox = document.getElementById('chat-input');
+            const chatBox = document.getElementById('chat-box');
+            const message = inputBox.value.trim();
+
+            if (message) {
+                const userMessage = document.createElement('div');
+                userMessage.textContent = `You: ${message}`;
+                chatBox.appendChild(userMessage);
+
+                // Simulate a response from the chatbot
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.textContent = `Bot: Sorry, I'm just a demo chatbot.`;
+                    chatBox.appendChild(botMessage);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+
+                inputBox.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
