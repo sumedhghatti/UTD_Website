@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lung Cancer Detection</title>
+    <title>MedAId - Lung Cancer Detection</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -40,38 +40,6 @@
             padding: 2em;
             text-align: center;
         }
-        .form-container {
-            margin: auto;
-            max-width: 600px;
-        }
-        .form-container form {
-            margin-bottom: 1em;
-        }
-        .form-container input[type="file"] {
-            margin-bottom: 1em;
-        }
-        .form-container input[type="submit"] {
-            background-color: #1abc9c;
-            border: none;
-            color: white;
-            padding: 1em;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 1em;
-        }
-        .form-container input[type="submit"]:hover {
-            background-color: #16a085;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-        .prediction {
-            font-size: 1.2em;
-            margin: 1em 0;
-            font-weight: bold;
-        }
         footer {
             background-color: #16a085;
             color: white;
@@ -81,11 +49,23 @@
             width: 100%;
             bottom: 0;
         }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1em;
+        }
+        .upload-form {
+            margin: 2em 0;
+        }
+        .result {
+            margin-top: 2em;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Lung Cancer Detection</h1>
+        <h1>MedAId</h1>
     </header>
     <nav>
         <a href="/">Home</a>
@@ -95,19 +75,20 @@
         <a href="/chatbot">Chatbot</a>
     </nav>
     <div class="container">
-        <div class="form-container">
-            <form action="/lung_cancer" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" required>
-                <input type="submit" value="Upload">
-            </form>
-            {% if prediction %}
-            <div class="prediction">Prediction: {{ prediction }}</div>
+        <h2>Lung Cancer Detection</h2>
+        <form class="upload-form" action="/lung_cancer" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*">
+            <button type="submit">Upload and Analyze</button>
+        </form>
+        {% if prediction %}
+        <div class="result">
+            <h3>Prediction: {{ prediction }}</h3>
             <img src="{{ img_path }}" alt="Uploaded Image">
-            {% endif %}
         </div>
+        {% endif %}
     </div>
     <footer>
-        <p>&copy; 2024 Medical Image Detection. All rights reserved.</p>
+        <p>&copy; 2024 MedAId. All rights reserved.</p>
     </footer>
 </body>
 </html>
